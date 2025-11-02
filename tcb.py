@@ -25,10 +25,12 @@ headers = {
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 
 def get_most_recent_chapter():
-    response = requests.get('https://tcbonepiecechapters.com/mangas/5/one-piece', headers=headers)
+    response = requests.get('https://tcbonepiecechapters.com/mangas/5/one-piece', headers=headers, timeout=10)
     soup = BeautifulSoup(response.text, 'html.parser')
-    chapters = soup.find_all('a', class_='block border border-border bg-card mb-3 p-3 rounded')
-    return chapters[0]
+    chapter = soup.select_one('a.block.border.border-border.bg-card.mb-3.p-3.rounded')
+    if not chapter:
+        raise ValueError("Could not find the most recent chapter element")
+    return chapter
 
 def send_discord_notification(chapter):
     if not DISCORD_WEBHOOK_URL:
