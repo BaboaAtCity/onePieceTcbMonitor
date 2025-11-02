@@ -78,8 +78,8 @@ while True:
         try:
             recent_chapter = get_most_recent_chapter()
             print_timestamped(f"checked recent {recent_chapter.text.strip()}")
-            print_timestamped("waiting 10 seconds to recheck...")
-            time.sleep(10)
+            print_timestamped("waiting 60 seconds to recheck...")
+            time.sleep(60)
             print_timestamped("rechecking...")
             new_chapter = get_most_recent_chapter()
             print_timestamped(f"rechecked recent {new_chapter.text.strip()}")
