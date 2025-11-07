@@ -33,9 +33,6 @@ def get_most_recent_chapter():
     return chapter
 
 def send_discord_notification(chapter):
-    if not DISCORD_WEBHOOK_URL:
-        print("DISCORD_WEBHOOK_URL is not set. Cannot send notification.")
-        return
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     title_div = chapter.find('div', class_='text-lg font-bold')
     subtitle_div = chapter.find('div', class_='text-gray-500')
@@ -74,6 +71,8 @@ def print_timestamped(message):
     print(f"[{now}] {message}")
 
 while True:
+    if not DISCORD_WEBHOOK_URL:
+        break
     if is_posting_day():
         try:
             recent_chapter = get_most_recent_chapter()
